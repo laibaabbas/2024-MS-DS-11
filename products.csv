@@ -1,0 +1,11 @@
+pid,name,image,rating
+p01,Refrigerator,refrigerator.jpg,4.5
+p04,Washing Machine,washing_machine.jpg,4.2
+p05,Dishwasher,dishwasher.jpg,4.8
+p06,Coffee Maker,coffee_maker.jpg,4.5
+p07,Toaster,toaster.jpg,4.0
+p08,Blender,blender.jpg,4.5
+p10,Air Purifier,air_purifier.jpg,4.6
+p11,Electric Kettle,electric_kettle.jpg,4.1
+p12,new machine,new_machine.jpg,4.0
+p13,new remover,img.jpn,3.5
