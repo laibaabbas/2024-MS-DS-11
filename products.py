@@ -1,74 +1,59 @@
-import csv
+products = [
+    {"pid": "p01", "name": "Refrigerator", "image": "refrigerator.jpg", "rating": 4.5},
+    {"pid": "p04", "name": "Washing Machine", "image": "washing_machine.jpg", "rating": 4.2},
+    {"pid": "p05", "name": "Dishwasher", "image": "dishwasher.jpg", "rating": 4.8},
+    {"pid": "p06", "name": "Coffee Maker", "image": "coffee_maker.jpg", "rating": 4.3},
+    {"pid": "p07", "name": "Toaster", "image": "toaster.jpg", "rating": 4.0},
+    {"pid": "p08", "name": "Blender", "image": "blender.jpg", "rating": 4.5},
+    {"pid": "p10", "name": "Air Purifier", "image": "air_purifier.jpg", "rating": 4.6},
+    {"pid": "p11", "name": "Electric Kettle", "image": "electric_kettle.jpg", "rating": 4.1},
+    {"pid": "p12", "name": "new machine", "image": "new_machine.jpg", "rating": 4.0},
+]
 
-# Load products from a CSV file
-def load_products_from_csv(file_name="products.csv"):
-    products = []
-    try:
-        with open(file_name, mode='r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                row['rating'] = float(row['rating'])  # Convert rating to float
-                products.append(row)
-    except FileNotFoundError:
-        print(f"File {file_name} not found. Starting with an empty product list.")
-    return products
-
-# Save products to a CSV file automatically after any CRUD operation
-def update_csv(products, file_name="products.csv"):
-    with open(file_name, mode='w', newline='') as file:
-        fieldnames = ["pid", "name", "image", "rating"]
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(products)
-
-# Show all products
+# Function to show all products in tabular format
 def show_products(products):
-    print("\nList of Products:")
     for index, product in enumerate(products):
-        print(  index, product['pid'], product['name'], '...', product['image'], product['rating'])
-#   print(f"{index}   {product['pid']}     {product['name']}     ...      {product['image']}    {product['rating']}")
-    num_rows = len(products)
-    num_columns = 6  # pid, name, description, price, image, rating
-    print(f"\n[{num_rows} rows x {num_columns} columns]\n")
+        print( index, product['pid'], product['name'], product['image'], product['rating'])
+    
+    print("\n[", len(products), " rows x 4 columns]\n" )
 
-
-# Add a new product and update the CSV
+# Function to add a new product
 def add_product(products):
-    pid = input("Enter Product ID: ")
-    name = input("Enter Product Name: ")
-    image = input("Enter Product Image: ")
+    pid = input("Enter Product id: ")
+    name = input("Enter Product name: ")
+    image = input("Enter Product image: ")
     rating = float(input("Enter Product Rating: "))
-    new_product = {"pid": pid, "name": name, "image": image, "rating": rating}
-    products.append(new_product)
-    update_csv(products)
-    print( list(new_product.values()))
+    
+    # Adding the product to the dictionary
+    products[pid] = {"name": name, "image": image, "rating": rating}
+    
+    print("\nNew product added:", [pid, name, image, rating])
 
-# Delete a product and update the CSV
+# Function to delete a product
 def delete_product(products):
     show_products(products)
-    product_index = int(input("Enter the index of the product to delete or other key to Exit "))
-    if 0 <= product_index < len(products):
-        del products[product_index]
-        update_csv(products)
-        print("Product deleted and CSV file updated successfully!")
+    pid = input("Enter the product id to delete or any key to exit ")
+    
+    if pid in products:
+        del products[pid]
+        print("\nProduct deleted successfully!")
     else:
-        print("Invalid index.")
+        print("\nInvalid product id.")
 
-# Update product rating and update the CSV
+# Function to update product rating
 def update_rating(products):
     show_products(products)
-    product_index = int(input("Enter the index of the product to update the rating: "))
-    if 0 <= product_index < len(products):
-        new_rating = float(input(f"Enter new rating for {products[product_index]['name']}: "))
-        products[product_index]["rating"] = new_rating
-        update_csv(products)
-        print("Rating updated and CSV file updated successfully!")
+    pid = input("Enter the product id to update the rating: ")
+    
+    if pid in products:
+        new_rating = float(input("Enter new rating for %s: " % products[pid]['name']))
+        products[pid]['rating'] = new_rating
+        print("\nRating updated successfully!")
     else:
-        print("Invalid index.")
+        print("\nInvalid product id.")
 
-# Main loop for the program
+# Main function for the CRUD operations
 def main():
-    products = load_products_from_csv()  # Load products from CSV at the start
 
     while True:
         print("\n1. Show All Products")
