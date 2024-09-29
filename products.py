@@ -1,80 +1,69 @@
-products = [
-    {"pid": "p01", "name": "Refrigerator", "image": "refrigerator.jpg", "rating": 4.5},
-    {"pid": "p04", "name": "Washing Machine", "image": "washing_machine.jpg", "rating": 4.2},
-    {"pid": "p05", "name": "Dishwasher", "image": "dishwasher.jpg", "rating": 4.8},
-    {"pid": "p06", "name": "Coffee Maker", "image": "coffee_maker.jpg", "rating": 4.3},
-    {"pid": "p07", "name": "Toaster", "image": "toaster.jpg", "rating": 4.0},
-    {"pid": "p08", "name": "Blender", "image": "blender.jpg", "rating": 4.5},
-    {"pid": "p10", "name": "Air Purifier", "image": "air_purifier.jpg", "rating": 4.6},
-    {"pid": "p11", "name": "Electric Kettle", "image": "electric_kettle.jpg", "rating": 4.1},
-    {"pid": "p12", "name": "new machine", "image": "new_machine.jpg", "rating": 4.0},
-]
-
-# Function to show all products in tabular format
+# 2024-MS-DS-11
 def show_products(products):
-    for index, product in enumerate(products):
-        print( index, product['pid'], product['name'], product['image'], product['rating'])
+    print("    pid   name              ...   image                rating") 
+    for index, (pid, product) in enumerate(products.items()):
+        print(f"{index}   {pid:5} {product['name']:15}   ...  {product['image']:20}  {product['rating']:5}")
     
-    print("\n[", len(products), " rows x 4 columns]\n" )
+    print(f"[{len(products)} rows x 6 columns]")
 
-# Function to add a new product
-def add_product(products):
-    pid = input("Enter Product id: ")
-    name = input("Enter Product name: ")
-    image = input("Enter Product image: ")
-    rating = float(input("Enter Product Rating: "))
-    
-    # Adding the product to the dictionary
-    products[pid] = {"name": name, "image": image, "rating": rating}
-    
-    print("\nNew product added:", [pid, name, image, rating])
+def add_product(products): 
+    pid = input("Enter product ID: ")
+    name = input("Enter product name: ")
+    image = input("Enter image name: ")
+    rating = float(input("Enter rating: "))
+    products[pid] = {'name': name, 'image': image, 'rating': rating}
+    print( [pid, name, image, rating])
 
-# Function to delete a product
 def delete_product(products):
-    show_products(products)
-    pid = input("Enter the product id to delete or any key to exit ")
-    
+    pid = input("Enter product ID to delete or any key to exit :")
     if pid in products:
         del products[pid]
-        print("\nProduct deleted successfully!")
+        print("Product deleted successfully!")
     else:
-        print("\nInvalid product id.")
+        print("Product not found.")
 
-# Function to update product rating
-def update_rating(products):
-    show_products(products)
-    pid = input("Enter the product id to update the rating: ")
-    
+def update_product_rating(products):
+    pid = input("Enter product ID to update rating: ")
     if pid in products:
-        new_rating = float(input("Enter new rating for %s: " % products[pid]['name']))
+        new_rating = float(input("Enter new rating: "))
         products[pid]['rating'] = new_rating
-        print("\nRating updated successfully!")
+        print("Rating updated successfully!")
     else:
-        print("\nInvalid product id.")
+        print("Product not found.")
 
-# Main function for the CRUD operations
 def main():
+    products = {
+        'p01': {'name': 'Refrigerator', 'image': 'refrigerator.jpg', 'rating': 4.5},
+        'p04': {'name': 'Washing Machine', 'image': 'washing_machine.jpg', 'rating': 4.2},
+        'p05': {'name': 'Dishwasher', 'image': 'dishwasher.jpg', 'rating': 4.8},
+        'p06': {'name': 'Coffee Maker', 'image': 'coffee_maker.jpg', 'rating': 4.3},
+        'p07': {'name': 'Toaster', 'image': 'toaster.jpg', 'rating': 4.0},
+        'p08': {'name': 'Blender', 'image': 'blender.jpg', 'rating': 4.5},
+        'p10': {'name': 'Air Purifier', 'image': 'air_purifier.jpg', 'rating': 4.6},
+        'p11': {'name': 'Electric Kettle', 'image': 'electric_kettle.jpg', 'rating': 1.1},
+        'p12': {'name': 'New Machine', 'image': 'new_machine.jpg', 'rating': 4.0}
+    }
 
     while True:
-        print("\n1. Show All Products")
+        print("1. Show All Products")
         print("2. Add New Product")
         print("3. Delete a Product")
         print("4. Update Product Rating")
         print("5. Exit")
-        option = int(input("Enter Option to Continue: "))
+        choice = input("Enter Option to Continue: ")
 
-        if option == 1:
+        if choice == '1':
             show_products(products)
-        elif option == 2:
+        elif choice == '2':
             add_product(products)
-        elif option == 3:
+        elif choice == '3':
             delete_product(products)
-        elif option == 4:
-            update_rating(products)
-        elif option == 5:
+        elif choice == '4':
+            update_product_rating(products)
+        elif choice == '5':
             break
         else:
-            print("Invalid option. Please try again.")
+            print("Invalid choice. Please try again.")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
